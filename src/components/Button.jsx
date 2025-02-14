@@ -1,6 +1,6 @@
 import React from "react";
 
-function button({
+function Button({
   children,
   bgColor = "bg-blue-500",
   textColor = "text-white",
@@ -18,4 +18,4 @@ function button({
   );
 }
 
-export default button;
+export default Button;

@@ -29,6 +29,7 @@ export class Service {
       );
     } catch (error) {
       console.log("Appwrite service:: createPost :: error: ", error);
+      throw error;
     }
   }
   async updatePost(slug, { title, content, featuredImage, status }) {
@@ -46,6 +47,7 @@ export class Service {
       );
     } catch (error) {
       console.log("Appwrite service:: updatePost :: error: ", error);
+      throw error;
     }
   }
   async deletePost(slug) {
@@ -82,7 +84,7 @@ export class Service {
       );
     } catch (error) {
       console.log("Appwrite service:: getPosts :: error: ", error);
-      return [];
+      return { documents: [] };
     }
   }
 
@@ -97,6 +99,7 @@ export class Service {
       );
     } catch (error) {
       console.log("Appwrite service:: uploadFile :: error: ", error);
+      return false;
     }
   }
   async deleteFile(fileId) {
@@ -108,13 +111,8 @@ export class Service {
       return false;
     }
   }
-  async getFilePreview(fileId) {
-    try {
-      return this.bucket.getFilePreview(config.appwriteBucketId, fileId);
-    } catch (error) {
-      console.log("Appwrite service:: getFilePreview :: error: ", error);
-      return false;
-    }
+  getFilePreview(fileId) {
+    return this.bucket.getFilePreview(config.appwriteBucketId, fileId);
   }
 }
 

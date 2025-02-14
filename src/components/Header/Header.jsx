@@ -23,7 +23,7 @@ export default function Header() {
       active: !authStatus,
     },
     {
-      name: "All posts",
+      name: "All Posts",
       slug: "/all-posts",
       active: authStatus,
     },
