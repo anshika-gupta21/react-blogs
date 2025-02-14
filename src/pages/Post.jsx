@@ -26,7 +26,19 @@ function Post() {
   const deletePost = () => {
     appwriteService.deletePost(post.$id).then((status) => {
       if (status) {
-        appwriteService.deleteFile(post.featuredImage);
+        appwriteService
+          .deleteFile(post.featuredImage)
+          .then((fileDeleted) => {
+            if (fileDeleted) {
+              console.log("Post and file deleted successfully.");
+              navigate("/");
+            } else {
+              console.log("Failed to delete file.");
+            }
+          })
+          .catch((error) => {
+            console.log("Error deleting file:", error);
+          });
         navigate("/");
       }
     });

@@ -48,7 +48,7 @@ export default function Header() {
                 <li key={item.name}>
                   <button
                     onClick={() => navigate(item.slug)}
-                    className="inline-block px-6 py-2 duration-200 rounded-full hover:bg-blue-100"
+                    className="inline-block px-6 py-2 duration-200 rounded-full hover:bg-blue-100 hover:cursor-pointer"
                   >
                     {item.name}
                   </button>
