@@ -24,24 +24,30 @@ function Post() {
   }, [slug, navigate]);
 
   const deletePost = () => {
-    appwriteService.deletePost(post.$id).then((status) => {
-      if (status) {
-        appwriteService
-          .deleteFile(post.featuredImage)
-          .then((fileDeleted) => {
-            if (fileDeleted) {
-              console.log("Post and file deleted successfully.");
-              navigate("/");
-            } else {
-              console.log("Failed to delete file.");
-            }
-          })
-          .catch((error) => {
-            console.log("Error deleting file:", error);
-          });
-        navigate("/");
-      }
-    });
+    appwriteService
+      .deletePost(post.$id)
+      .then((status) => {
+        if (status) {
+          appwriteService
+            .deleteFile(post.featuredImage)
+            .then((fileDeleted) => {
+              if (fileDeleted) {
+                console.log("Post and file deleted successfully.");
+                navigate("/");
+              } else {
+                console.log("Failed to delete file.");
+              }
+            })
+            .catch((error) => {
+              console.log("Error deleting file:", error);
+            });
+        } else {
+          console.log("Failed to delete post.");
+        }
+      })
+      .catch((error) => {
+        console.log("Error deleting post:", error);
+      });
   };
 
   return post ? (
@@ -56,11 +62,18 @@ function Post() {
           {isAuthor && (
             <div className="absolute right-6 top-6">
               <Link to={`/edit-post/${post.$id}`}>
-                <Button bgColor="bg-green-500" className="mr-3">
+                <Button
+                  bgColor="bg-green-500"
+                  className="mr-3 hover:cursor-pointer"
+                >
                   Edit
                 </Button>
               </Link>
-              <Button bgColor="bg-red-500" onClick={deletePost}>
+              <Button
+                bgColor="bg-red-500"
+                className="hover:cursor-pointer"
+                onClick={deletePost}
+              >
                 Delete
               </Button>
             </div>
