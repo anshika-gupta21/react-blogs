@@ -21,11 +21,15 @@ function PostForm({ post }) {
   const submit = async (data) => {
     try {
       if (post) {
-        const file = data.image[0]
-          ? appwriteService.uploadFile(data.image[0])
-          : null;
+        let file = null;
+        // const file = data.image[0]
+        //   ? appwriteService.uploadFile(data.image[0])
+        //   : null;
+        if (data.image[0])
+          file = await appwriteService.uploadFile(data.image[0]);
         if (file) {
-          appwriteService.deleteFile(post.featuredImage);
+          console.log("Deleting file with ID:", post.featuredImage);
+          await appwriteService.deleteFile(post.featuredImage);
         }
         const dbPost = await appwriteService.updatePost(post.$id, {
           ...data,
